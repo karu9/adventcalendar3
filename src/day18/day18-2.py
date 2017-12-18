@@ -1,6 +1,6 @@
 instructs = [x[:-1].split(' ') for x in open('input.txt').readlines()]
 def initreg(reg, registers):
-    if reg not in registers:
+    if not reg.replace('-', '').isdigit() and reg not in registers:
         registers[reg] = 0
 def getintval(val, registers):
     intval = 0
@@ -16,7 +16,7 @@ def mul(reg, val, registers, values):
     registers[reg] *= getintval(val, registers)
     values[0] += 1
 def jgz(reg, val, registers, values):
-    if registers[reg] > 0:
+    if getintval(reg, registers) > 0:
         values[0] += getintval(val, registers)
     else :    
         values[0] += 1
