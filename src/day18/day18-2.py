@@ -38,7 +38,7 @@ def snd(reg, registers, values, othersvalues, myqueue, othersqueue):
     values[2] += 1
     values[0] += 1
 def rcv(reg, registers, values, othersvalues, myqueue, othersqueue):
-    if len(myqueue) :
+    if len(myqueue) > 0:
         registers[reg] = myqueue.pop(0)
         values[0] += 1
     else :
