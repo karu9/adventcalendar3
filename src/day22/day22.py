@@ -41,7 +41,7 @@ for i in range(10000):
         to_update = list(my_grid[my_carrier[1]])
         to_update[my_carrier[0]] = '.'
         my_grid[my_carrier[1]] = ''.join(to_update)
-        res = turn(True, my_carrier, my_direction, my_grid)
+        res = turn(False, my_carrier, my_direction, my_grid)
         my_carrier = res[0]
         my_direction = res[1]
         my_grid = res[2]
@@ -50,7 +50,7 @@ for i in range(10000):
         to_update[my_carrier[0]] = '#'
         my_grid[my_carrier[1]] = ''.join(to_update)
         counter += 1
-        res = turn(False, my_carrier, my_direction, my_grid)
+        res = turn(True, my_carrier, my_direction, my_grid)
         my_carrier = res[0]
         my_direction = res[1]
         my_grid = res[2]
