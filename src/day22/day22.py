@@ -1,49 +1,57 @@
-GRID = [x[:-1] for x in open('input.txt').readlines()]
-CARRIER = [int(len(GRID[0])/2), int(len(GRID)/2)]
-DIR = [0, -1]
+my_grid = [x[:-1] for x in open('input.txt').readlines()]
+my_carrier = [int(len(my_grid[0])/2), int(len(my_grid)/2)]
+my_direction = [0, -1]
 counter = 0
-def turn(is_left):
-    if DIR[0] == 0 and DIR[1] == 1:
+def turn(is_left, carrier, direction, grid):
+    if direction[0] == 0 and direction[1] == 1:
         if is_left:
-            DIR = [1, 0]
+            direction = [1, 0]
         else:
-            DIR = [-1, 0]
-    elif DIR[0] == 0 and DIR[1] == -1:
+            direction = [-1, 0]
+    elif direction[0] == 0 and direction[1] == -1:
         if not is_left:
-            DIR = [1, 0]
+            direction = [1, 0]
         else:
-            DIR = [-1, 0]
-    elif DIR[0] == 1 and DIR[1] == 0:
+            direction = [-1, 0]
+    elif direction[0] == 1 and direction[1] == 0:
         if is_left:
-            DIR = [0, -1]
+            direction = [0, -1]
         else:
-            DIR = [0, 1]
+            direction = [0, 1]
     else :
         if not is_left:
-            DIR = [0, -1]
+            direction = [0, -1]
         else:
-            DIR = [0, 1]
-    CARRIER[0] += DIR[0]
-    CARRIER[1] += DIR[1]
-    if CARRIER[0] < 0 :
-        CARRIER[0] = 0
-        GRID = ['.' + x for x in GRID]
-    if CARRIER[0] == len(GRID[0]):
-        GRID = [x + '.' for x in GRID]
-
-
-if __name__ == '__main__':
-    for i in range(10000):
-        print(len(GRID))
-        if GRID[CARRIER[1]][CARRIER[0]] == '#':
-            to_update = list(GRID[CARRIER[1]])
-            to_update[CARRIER[0]] = '.'
-            GRID[CARRIER[1]] = ''.join(to_update)
-            turn(True)
-        else :
-            to_update = list(GRID[CARRIER[1]])
-            to_update[CARRIER[0]] = '#'
-            GRID[CARRIER[1]] = ''.join(to_update)
-            counter += 1
-            turn(False)
-        print(counter)
+            direction = [0, 1]
+    carrier[0] += direction[0]
+    carrier[1] += direction[1]
+    if carrier[0] < 0 :
+        carrier[0] = 0
+        grid = ['.' + x for x in grid]
+    if carrier[0] == len(grid[0]):
+        grid = [x + '.' for x in grid]
+    if carrier[1] < 0 :
+        carrier[1] = 0
+        grid = [['.' for x in range(len(grid[0]))]] + grid
+    if carrier[1] == len(grid):
+        grid.append(['.' for x in range(len(grid[0]))])
+    return [carrier, direction, grid]
+for i in range(10000):
+    if my_grid[my_carrier[1]][my_carrier[0]] == '#':
+        to_update = list(my_grid[my_carrier[1]])
+        to_update[my_carrier[0]] = '.'
+        my_grid[my_carrier[1]] = ''.join(to_update)
+        res = turn(True, my_carrier, my_direction, my_grid)
+        my_carrier = res[0]
+        my_direction = res[1]
+        my_grid = res[2]
+    else :
+        to_update = list(my_grid[my_carrier[1]])
+        to_update[my_carrier[0]] = '#'
+        my_grid[my_carrier[1]] = ''.join(to_update)
+        counter += 1
+        res = turn(False, my_carrier, my_direction, my_grid)
+        my_carrier = res[0]
+        my_direction = res[1]
+        my_grid = res[2]
+print(counter)
